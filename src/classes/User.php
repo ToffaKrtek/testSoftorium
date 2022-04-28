@@ -54,6 +54,12 @@
     {
       return $this->id;
     }
+    public function ListPredicts()
+    {
+      $predict_class = new Predict();
+      $predicts = $predict_class->GetQuestionAndCount();
+      return $predicts;
+    }
   }
 
  ?>

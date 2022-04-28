@@ -12,8 +12,15 @@
     public function AddPredict($question, $user_id )
     {
       $answer = $this->GiveAnswer();
-      $sql = "INSERT INTO `$this->table_name`(`question`, `answer`, `user_id`) VALUES( '$question', '$answer', $user_id );";
-      $result = $this->Exec($sql);
+      //$sql = "INSERT INTO `$this->table_name`(`question`, `answer`, `user_id`) VALUES( '$question', '$answer', $user_id );";
+      $sql = "INSERT INTO `$this->table_name`(`question`, `answer`, `user_id`) VALUES( :question, :answer, :user_id );";
+      $stmt = $this->db->prepare($sql);
+      $stmt->bindParam (":question", $question, PDO::PARAM_STR);
+      $stmt->bindParam (":answer", $answer, PDO::PARAM_STR);
+      $stmt->bindParam (":user_id", $user_id, PDO::PARAM_INT);
+      $stmt->execute();
+      //$data = $stmt->fetchAll();
+      //$result = $this->Exec($sql);
       return $answer;
     }
     protected function GiveAnswer()
