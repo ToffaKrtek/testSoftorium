@@ -7,7 +7,7 @@
   $values = "Задать вопрос";
   if(isset($_POST['question'])){
     if(isset($_SESSION['user_id'])){
-      $user_id = $_SESSION['user_id'];
+      $user_id = $_SESSION['user_id'][0];
       $user = new User("", $user_id);
 
     }
@@ -19,7 +19,7 @@
     }
   }
   if(isset($_SESSION['user_id'])){
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id'][0];
     $user = new User("", $user_id);
     $predict_class = new Predict();
     $predicts = $predict_class->GetQuestionAndCount();
@@ -69,7 +69,7 @@
       <p><?= $values;?> </p>
        <form method="post"> <input type="text" name="question" value=""><input type="submit"></form>
 <?php
-    if(isset($predicts)){
+    if(count($predicts) > 0){
       foreach ($predicts as  $predict) {
        ?><p><b>Вопрос: </b> <?= $predict['question'];?> ----- <small>Был задан  <?= $predict['count'];?> раз </small></p>
       <?php
