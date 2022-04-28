@@ -12,18 +12,19 @@ services:
       - mysql
     links:
       - mysql
-   
+
   mysql:
     image: mysql:5.6
     restart: always
     volumes:
       - ./mysql:/var/lib/mysql
-      
+      - ./entrypoint:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: softorium
     ports:
       - "3607:3306"
-    command: --default-authentication-plugin=mysql_native_password --sql-mode="" 
+    command: --default-authentication-plugin=mysql_native_password
 
   adminer:
     image: adminer
