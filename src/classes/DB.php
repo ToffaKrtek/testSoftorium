@@ -4,14 +4,21 @@
    */
   class DB
   {
-    public static function getConnect()
+    private $db;
+    public function __construct()
     {
+      try {
       $paramsPath = ROOT.'/config.php';
       $params = include($paramsPath);
-      $db = new PDO($params['dsn'], $params['user'], $params['pass'],[PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-      return $db;
+      $this->db = new PDO($params['dsn'], $params['user'], $params['pass']);
+      } catch(PDOException $e){
+            echo $e->getMessage();
+      }
     }
-
-  }
-
+    public function getConnect(){
+      if ($this->db instanceof PDO) {
+            return $this->db;
+      }
+    }
+}
  ?>

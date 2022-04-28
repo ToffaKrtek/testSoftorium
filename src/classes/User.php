@@ -5,30 +5,54 @@
    */
   class User extends Main
   {
-    string $name;
-    int $id;
     public $table_name = "users";
-    public function __construct($name)
+    public function __construct($name, $id=null)
     {
       parent::__construct();
-      $this->name = $name;
-      if(){}
+      if($id != null){
+        $this->id = $id;
+        $this->name = $this->NameById();
+      }else {
+        $this->name = $name;
+        $this->id = $this->CheckName();
+      }
+
     }
 
     protected function CheckName()
     {
-      $sql = "SELECT * FROM $this->table_name WHERE user_name='$this->name';";
+      $sql = "SELECT * FROM `$this->table_name` WHERE name='$this->name';";
       $result = $this->Exec($sql);
-      if(isset($result[0]['user_id'])){
-        return $result[0]['user_id'];
+      if(!isset($result['user_id'])){
+        $result = $this->CreateUser();
       }
-      return $this->CreateUser();
+      return $result[0];
     }
     protected function CreateUser()
     {
-      $sql = "INSERT INTO $this->table_name (user_name) VALUES('$this->name'); SELECT LAST_INSERT_ID();";
+      $sql = "INSERT INTO `$this->table_name`(`name`) VALUES( '$this->name' );";
       $result = $this->Exec($sql);
-      return $result[0][0];
+      $sql = "SELECT LAST_INSERT_ID();";
+      $result = $this->Exec($sql);
+      return $result;
+    }
+
+    protected function NameById()
+    {
+      $sql = "SELECT `name` FROM `$this->table_name` WHERE id='$this->id';";
+      $result = $this->Exec($sql);
+      return $result['id'];
+    }
+
+    public function MakePredict($question)
+    {
+      $predict = new Predict();
+      $result = $predict->AddPredict($question, $this->id);
+      return $result;
+    }
+    public function GetId()
+    {
+      return $this->id;
     }
   }
 

@@ -1,9 +1,8 @@
 <?php
 //DATABASE keys
 return array(
-  'host' => 'mysql',
-  'dbname' => 'softorium',
+  'dsn'  => 'mysql:host=mysql;dbname=softorium',
   'user' => 'root',
-  'password' => 'password',
+  'pass' => 'password',
 );
 ?>
