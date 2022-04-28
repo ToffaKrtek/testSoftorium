@@ -22,7 +22,7 @@
     $user_id = $_SESSION['user_id'];
     $user = new User("", $user_id);
     $predict_class = new Predict();
-    $predicts = $predict_class->GetAll();
+    $predicts = $predict_class->GetQuestionAndCount();
   }else{
     $values = "Создать пользователя";
   }
@@ -31,13 +31,22 @@
     $user = new User($_POST['name']);
     $user_id = $user->GetId();
     $_SESSION['user_id'] = $user_id;
+    $values = "Задать вопрос";
 
   }
 
 ?>
 <!DOCTYPE html>
 <html>
-
+<style>
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+  text-align: center;
+}
+</style>
 <head>
   <meta charset="utf-8" />
   <title>HTML5</title>
@@ -47,6 +56,7 @@
 </head>
 
 <body>
+  <div class="center">
   <h1><?=$values;?></h1>
   <?php
     if(!isset($_SESSION['user_id'])){
@@ -59,13 +69,15 @@
       <p><?= $values;?> </p>
        <form method="post"> <input type="text" name="question" value=""><input type="submit"></form>
 <?php
-    foreach ($predicts as  $predict) {
-     ?><p><?= $predict['question'];?> : <?= $predict['answer'];?></p>
-    <?php
-  }
+    if(isset($predicts)){
+      foreach ($predicts as  $predict) {
+       ?><p><b>Вопрос: </b> <?= $predict['question'];?> ----- <small>Был задан  <?= $predict['count'];?> раз </small></p>
+      <?php
+    }
+}
 }
    ?>
-
+</div>
 </body>
 
 </html>
