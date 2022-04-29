@@ -1,5 +1,7 @@
 <?php
   require_once('Main.php');
+
+  require_once(ROOT . "/classes/Predict.php");
   /**
    *
    */
@@ -34,7 +36,7 @@
       $result = $this->Exec($sql);
       $sql = "SELECT LAST_INSERT_ID();";
       $result = $this->Exec($sql);
-      return $result;
+      return $result[0];
     }
 
     protected function NameById()
