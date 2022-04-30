@@ -5,6 +5,7 @@
   require_once(ROOT . "/classes/Predict.php");
   session_start();
   $values = "Задать вопрос";
+  print_r($_SESSION);
   if(isset($_POST['question'])){
     if(isset($_SESSION['user_id'])){
       $user_id = $_SESSION['user_id'][0];
@@ -49,35 +50,20 @@
 </style>
 <head>
   <meta charset="utf-8" />
-  <title>HTML5</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Шар предсказаний</title>
+
   <!--[if IE]>
    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 </head>
 
 <body>
-  <div class="center">
-  <h1><?=$values;?></h1>
-  <?php
-    if(!isset($_SESSION['user_id'])){
-   ?>
-   <p><?= $values;?> </p>
-      <form method="post"> <input type="text" name="name" value=""><input type="submit"></form>
-  <?php
-    }else{
-     ?>
-      <p><?= $values;?> </p>
-       <form method="post"> <input type="text" name="question" value=""><input type="submit"></form>
-<?php
-    if(count($predicts) > 0){
-      foreach ($predicts as  $predict) {
-       ?><p><b>Вопрос: </b> <?= $predict['question'];?> ----- <small>Был задан  <?= $predict['count'];?> раз </small></p>
-      <?php
-    }
-}
-}
-   ?>
-</div>
+
+<div id="reacter" data-user="<?php echo $user_id ? $user_id : 'null'; ?>"></div>
+<noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div>
+<script defer="defer" src="/main.js"></script>
+
 </body>
 
 </html>
