@@ -32,11 +32,17 @@
     }
     protected function CreateUser()
     {
-      $sql = "INSERT INTO `$this->table_name`(`name`) VALUES( '$this->name' );";
+      $sql = "SELECT `user_id` FROM `$this->table_name` WHERE `name`='$this->name';";
       $result = $this->Exec($sql);
-      $sql = "SELECT LAST_INSERT_ID();";
-      $result = $this->Exec($sql);
-      return $result[0];
+      if(isset($result[0])){
+        return $result[0];
+      }else {
+        $sql = "INSERT INTO `$this->table_name`(`name`) VALUES( '$this->name' );";
+        $result = $this->Exec($sql);
+        $sql = "SELECT LAST_INSERT_ID();";
+        $result = $this->Exec($sql);
+        return $result[0];
+      }
     }
 
     protected function NameById()
