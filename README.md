@@ -5,11 +5,6 @@
 --  http://localhost -- php-apache         
 --  http://localhost:8099 -- Adminer (веб-интерфейс для администрирования СУБД хост - mysql пользователь - root пароль - password )
 
-
-# развернут на VPS
-адресс -- http://194.67.74.67                
- -- позже изменю на 80 порт (изменено)
-
 # репозиторий фронтеда
 react+webpack+babel
 -- https://github.com/ToffaKrtek/testSoftoriumFrontend
